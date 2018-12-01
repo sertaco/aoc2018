@@ -76,4 +76,4 @@ __pycache__
 #dev stuff
 /mdp_toolbox
 
-.idea*
+.idea/*
