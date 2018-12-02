@@ -1,17 +1,13 @@
-import collections
+from collections import Counter
 
 
 def d1():
-    inp = "./input/1a.txt"
-    init = 0
 
     def p1(inp, init):
         with open(inp, "r") as f:
             instructions = [int(i) for i in f.read().strip().split('\n')]
         freq_shift = init + sum(instructions)
         return freq_shift, instructions
-
-    print("Day 1 Part 1 result: {}".format(p1(inp, init)[0]))
 
     def find_first_repeat(l, l_next):
         for i in l_next:
@@ -33,11 +29,57 @@ def d1():
 
         return find_first_repeat(freq_history, freq_next_segment)
 
+    inp = "./input/1.txt"
+    init = 0
+    print("Day 1 Part 1 result: {}".format(p1(inp, init)[0]))
     print("Day 1 Part 2 result: {}".format(p2(inp, init)))
 
 
+def d2():
+
+    def letter2(d):
+        if len([i for i in d.elements() if d[i] == 2]) > 0:
+            return 1
+        else:
+            return 0
+
+    def letter3(d):
+        if len([i for i in d.elements() if d[i] == 3]) > 0:
+            return 1
+        else:
+            return 0
+
+    def p1(inp):
+        with open(inp) as f:
+            l = f.read().strip().split()
+            l_counted = [Counter(i) for i in l]
+
+            l_tuples = [(letter2(counter_obj), letter3(counter_obj)) for counter_obj in l_counted]
+        return sum([i[0] for i in l_tuples])*sum([i[1] for i in l_tuples])
+
+    def p2(inp):
+        with open(inp) as f:
+            l = f.read().strip().split()
+
+            length = len(l[0])
+
+            for i in range(length):
+                newlist = []
+                for j in l:
+                    word = list(j)
+                    del word[i]
+                    newlist.append(''.join(word))
+
+                if len(set(newlist)) < len(l):
+                    return Counter(newlist).most_common(1)[0][0]
+
+    inp = "./input/2.txt"
+    print("Day 2 Part 1 result: {}".format(p1(inp)))
+    print("Day 2 Part 2 result: {}".format(p2(inp)))
+
+
 if __name__ == "__main__":
-    d1()
+    d2()
 
 
 
