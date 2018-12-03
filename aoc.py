@@ -1,4 +1,5 @@
 from collections import Counter
+import numpy as np
 
 
 def d1():
@@ -77,10 +78,55 @@ def d2():
     print("Day 2 Part 1 result: {}".format(p1(inp)))
     print("Day 2 Part 2 result: {}".format(p2(inp)))
 
+def d3():
+    def get_total_claim_size(claims):
+        return sum([np.prod(i[1]) for i in claims])
+
+    def get_covered_fabric(claims):
+        fabric = np.array([[0]*1000]*1000)
+        for claim in claims:
+            x = claim[0][0]
+            y = claim[0][1]
+            w = claim[1][0]
+            l = claim[1][1]
+            fabric[x:x+w, y:y+l] += np.array([[1]*l]*w)
+        return fabric
+
+    def p1(inp):
+        with open(inp) as f:
+            claims_ = f.read().strip().split('\n')
+            claims_ = [i.split('@ ')[1].split(': ') for i in claims_]
+            claims = [(tuple([int(j) for j in i[0].split(',')]), tuple([int(j) for j in i[1].split('x')])) for i in claims_]
+
+        fabric = get_covered_fabric(claims)
+        fabric[fabric == 1] = 0
+        fabric[fabric > 1] = 1
+        return sum(sum(fabric))
+
+    def p2(inp):
+        with open(inp) as f:
+            claims_ = f.read().strip().split('\n')
+            claims_ = [i.split('@ ')[1].split(': ') for i in claims_]
+            claims = [(tuple([int(j) for j in i[0].split(',')]), tuple([int(j) for j in i[1].split('x')])) for i in claims_]
+
+        fabric = get_covered_fabric(claims)
+
+        for i, claim in enumerate(claims):
+            x = claim[0][0]
+            y = claim[0][1]
+            w = claim[1][0]
+            l = claim[1][1]
+
+            if sum(sum(fabric[x:x + w, y:y + l])) == w*l:
+                return i+1
+
+    inp = "./input/3.txt"
+    print("Day 3 Part 1 result: {}".format(p1(inp)))
+    print("Day 3 Part 2 result: {}".format(p2(inp)))
+
 
 if __name__ == "__main__":
-    d2()
-
+    d3()
 
 
 
