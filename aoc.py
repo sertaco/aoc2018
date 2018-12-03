@@ -78,9 +78,8 @@ def d2():
     print("Day 2 Part 1 result: {}".format(p1(inp)))
     print("Day 2 Part 2 result: {}".format(p2(inp)))
 
+
 def d3():
-    def get_total_claim_size(claims):
-        return sum([np.prod(i[1]) for i in claims])
 
     def get_covered_fabric(claims):
         fabric = np.array([[0]*1000]*1000)
@@ -127,6 +126,4 @@ def d3():
 
 if __name__ == "__main__":
     d3()
-
-
 
