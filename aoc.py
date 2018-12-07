@@ -209,11 +209,103 @@ def d4():
 
 def d5():
 
-    def p1():
+    def get_input(inp):
+        with open(inp) as f:
+            return f.read().strip()
+
+    def remove_opposites(polymer):
+
+        last_poly_len = 0
+        while last_poly_len != len(polymer):
+            last_poly_len = len(polymer)
+            b = list(polymer)
+
+            for i, s in enumerate(b):
+                if i < len(b) - 1 and b[i + 1] != '' and s != '':
+                    if abs(ord(s) - ord(b[i + 1])) == 32:
+                        b[i] = ''
+                        b[i + 1] = ''
+            polymer = ''.join(b)
+        return polymer
+
+    def p1(inp):
+        polymer = get_input(inp)
+        return len(remove_opposites(polymer))
+
+    def p2(inp):
+        polymer = get_input(inp)
+        polymer = remove_opposites(polymer)
+
+        poly_letters = list(set(polymer.upper()))
+
+        polymer = list(polymer)
+        new_polymer_len = []
+        for l in poly_letters:
+            new_polymer = [s for s in polymer if (s != l) and (s != l.lower())]
+            new_polymer = remove_opposites(''.join(new_polymer))
+            new_polymer_len.append(len(new_polymer))
+
+        #return poly_letters[new_polymer_len.index(min(new_polymer_len))]
+        return min(new_polymer_len)
+    inp = "./input/5.txt"
+    #print("Day 5 Part 1 result: {}".format(p1(inp)))
+    print("Day 5 Part 2 result: {}".format(p2(inp)))
+
+def d6():
+    def get_input(inp):
+        with open(inp) as f:
+            r = [tuple([int(j) for j in i.split(', ')])for i in f.read().strip().split('\n')]
+        return r
+
+    def p1(inp):
+        inp = get_input(inp)
+        x_max = max([i[0] for i in inp])
+        y_max = max([i[1] for i in inp])
+        #
+        # for i in inp:
+        #     x = [[i[0]], [i[1]] for i in inp]
+
+        #print(x)
+
+
+    def p2(inp):
         pass
 
-    def p2():
+    inp = "./input/6.txt"
+    print("Day 6 Part 1 result: {}".format(p1(inp)))
+    print("Day 6 Part 2 result: {}".format(p2(inp)))
+
+def d7():
+    def get_input(inp):
+        with open(inp) as f:
+            r = f.read().split()
+        return r
+
+    def p1(inp):
+        get_input(inp)
+
+    def p2(inp):
         pass
+
+    inp = "./input/6.txt"
+    print("Day 7 Part 1 result: {}".format(p1(inp)))
+    print("Day 7 Part 2 result: {}".format(p2(inp)))
+
+def d8():
+    def get_input(inp):
+        with open(inp) as f:
+            r = f.read()
+        return r
+
+    def p1(inp):
+        get_input(inp)
+
+    def p2(inp):
+        pass
+
+    inp = "./input/6.txt"
+    print("Day 8 Part 1 result: {}".format(p1(inp)))
+    print("Day 8 Part 2 result: {}".format(p2(inp)))
 
 if __name__ == "__main__":
-    d4()
+    d5()
